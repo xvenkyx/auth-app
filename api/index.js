@@ -1,17 +1,19 @@
 import express from "express";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import connect2mongo from "./db/connect2mongo.js";
-import userRoutes from "./routes/user.route.js"
+import userRoutes from "./routes/user.route.js";
+import authRoutes from "./routes/auth.route.js";
 dotenv.config();
 
 const app = express();
 
-const port = process.env.PORT;
+app.use(express.json());
 
-app.listen(port, () => {
-  connect2mongo()
-  console.log(`Server running on port - ${port}`);
+app.listen(process.env.PORT, () => {
+  connect2mongo();
+  console.log(`Server running on port - ${process.env.PORT}`);
 });
 
 //routes
-app.use("/api/user", userRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api/auth", authRoutes);
